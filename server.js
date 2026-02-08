@@ -6,11 +6,21 @@ const app = express();
 app.use(express.json());
 
 // Connecting through mySQL
+
+// const db = mysql.createConnection({
+//   host: "localhost",
+//   user: "root",
+//   password: "root@123",
+//   database: "servicedesk"
+// });
+
+// Connecting through Railway - MySQL 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "root@123",
-  database: "servicedesk"
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
 // Automation Rules
