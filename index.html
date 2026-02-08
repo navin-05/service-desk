@@ -1,0 +1,89 @@
+<!-- front-end form -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Service Desk</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <a href="admin.html" class="admin-float">
+         <span>Go to Admin Dashboard</span>
+    </a>
+      
+      
+  <div class="container">
+    <h2>Raise IT Support Ticket</h2>
+
+    <form id="ticketForm">
+      <label for="employee">Employee Name</label>
+      <input
+        type="text"
+        id="employee"
+        placeholder="Enter name"
+        required
+      />
+
+      <label for="issue">Issue Description</label>
+      <textarea
+        id="issue"
+        placeholder="Describe issue"
+        required
+      ></textarea>
+
+      <button type="submit">Raise Ticket</button>
+      <!-- <button type="sample">📊 Go to Admin Dashboard</button> -->
+    </form>
+  </div>
+
+  <!-- <div class="admin-link">
+    <a href="admin.html">📊 Go to Admin Dashboard</a>
+  </div> -->
+  
+
+<script>
+    // Check server connection when page loads
+    window.onload = async () => {
+      try {
+        const res = await fetch("http://localhost:3000/api/health");
+    
+        if (res.ok) {
+          alert("✅ Server connected successfully");
+        } else {
+          alert("❌ Server is running but not responding correctly");
+        }
+      } catch (err) {
+        alert("❌ Server not connected. Please start Node.js server.");
+      }
+    };
+    
+    // Form submission
+    document.getElementById("ticketForm").addEventListener("submit", async e => {
+      e.preventDefault();
+    
+      function resetform(){
+        document.getElementById("issue").value = "";
+      }
+
+      
+      const employee = document.getElementById("employee").value;
+      const issue = document.getElementById("issue").value;
+    
+      try {
+        const res = await fetch("http://localhost:3000/api/create-ticket", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ employee, issue })
+        });
+    
+        const data = await res.json();
+        alert("🎫 Ticket Created: " + data.ticketId);
+        resetform();
+    
+      } catch (err) {
+        alert("❌ Failed to create ticket. Server not reachable.");
+      }
+    });
+</script>
+
+</body>
+</html>

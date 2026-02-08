@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin - Ticket List</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+    body{
+        background-color: white;
+    }
+</style>
+<body>
+    <a href="index.html" class="admin-float2">
+         <span>Back to User Page</span>
+    </a>
+      
+
+  <div class="admincontainer">
+    <h2> Support Tickets</h2>
+
+    <table id="ticketTable">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Ticket ID</th>
+          <th>Assigned Team</th>
+          <th>Issue</th>
+          <th>Created At</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+<script>
+  async function loadTickets() {
+    try {
+      const res = await fetch("http://localhost:3000/api/tickets");
+      const tickets = await res.json();
+
+      const tbody = document.querySelector("#ticketTable tbody");
+      tbody.innerHTML = "";
+
+      tickets.forEach(ticket => {
+        const row = `
+          <tr>
+            <td>${ticket.id}</td>
+            <td>${ticket.ticket_id}</td>
+            <td>${ticket.assigned_team}</td>
+            <td>${ticket.issue}</td>
+            <td>${new Date(ticket.created_at).toLocaleString()}</td>
+            <td>${ticket.status}</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      });
+
+    } catch (err) {
+      alert("❌ Failed to load tickets");
+    }
+  }
+
+  loadTickets();
+</script>
+
+</body>
+</html>
