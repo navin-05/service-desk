@@ -36,7 +36,8 @@
 <script>
   async function loadTickets() {
     try {
-      const res = await fetch("http://localhost:3000/api/tickets");
+    //   const res = await fetch("http://localhost:3000/api/tickets");
+      const res = await fetch("/api/tickets");
       const tickets = await res.json();
 
       const tbody = document.querySelector("#ticketTable tbody");

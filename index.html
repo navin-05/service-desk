@@ -44,7 +44,12 @@
     // Check server connection when page loads
     window.onload = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/health");
+        // localhost :
+        // const res = await fetch("http://localhost:3000/api/health");
+
+        //deployed :
+        const res = await fetch("https://service-desk-prototype.up.railway.app/api/health");
+
     
         if (res.ok) {
           alert("✅ Server connected successfully");
@@ -69,7 +74,8 @@
       const issue = document.getElementById("issue").value;
     
       try {
-        const res = await fetch("http://localhost:3000/api/create-ticket", {
+        // const res = await fetch("http://localhost:3000/api/create-ticket", {
+        const res = await fetch("/api/create-ticket", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ employee, issue })
